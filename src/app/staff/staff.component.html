@@ -1,0 +1,95 @@
+
+<hr style="background-color: black;">
+<h2 style="text-align: center; color: green;">***  Staff Page  ***</h2>
+<hr style="background-color: black;">
+<br>
+<div class="row">
+  <div class="col-lg-4 col-md-4 col-12">
+    <form [formGroup]="staffForm">
+      <div class="form-group">
+        <label>Staff Name:</label>
+        <input type="text" class="form-control" placeholder="Enter Staff Name" formControlName="staffname" 
+        [ngClass]="{'is-invalid': submitted && f['staffname'].errors}">
+        <div *ngIf="submitted && f['staffname'].errors" class="invalid-feedback">
+          
+          <div *ngIf="f['staffname'].errors['required']">
+            Full Name is required!
+          </div>
+    
+           <div *ngIf="f['staffname'].errors['minlength']">
+            Please enter minimum 6 characters...!
+          </div>
+         
+          <div *ngIf="f['staffname'].errors['maxlength']">
+            Please enter maximum 15 characters...!
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Staff Role:</label>
+        <input type="text" class="form-control" placeholder="Enter Staff Role" formControlName="staffrole"
+        [ngClass]="{'is-invalid': submitted && f['staffrole'].errors}">
+        <div *ngIf="submitted && f['staffrole'].errors" class="invalid-feedback">
+          
+          <div *ngIf="f['staffrole'].errors['required']">
+            Staff Roll is required!
+          </div>
+    
+           <div *ngIf="f['staffrole'].errors['minlength']">
+            Please enter minimum 6 characters...!
+          </div>
+         
+          <div *ngIf="f['staffrole'].errors['maxlength']">
+            Please enter maximum 10 characters...!
+          </div>
+        </div>
+      </div>
+     <div class="form-group">
+      <label for="sel1" >Select Gender:</label>
+      <select class="form-control" formControlName="gender" [ngClass]="{'is-invalid': submitted && f['gender'].errors}">
+        <option>Male</option>
+        <option>Female</option>
+        <option>Transgender</option>
+      </select>
+      <div *ngIf="submitted && f['gender'].errors" class="invalid-feedback">
+        Gender is required!
+      </div>
+     </div>
+      <button type="submit" *ngIf="staffeditoperation==false" class="btn btn-info"style="border: 5px solid rgb(214, 232, 240);" (click)="staffsave()">Submit</button>
+      <button type="button" *ngIf="staffeditoperation==true" class="btn btn-warning" style="border: 5px solid rgb(214, 232, 240);"(click)="Updatestaff()">Update</button>
+
+    </form>
+  </div>
+  <div class="col-lg-8 col-md-8 col-12">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-12" style="padding-bottom: 1rem;">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" [(ngModel)]="staffterm">
+        
+      </div>
+    <div class="col-lg-12 col-md-12 col-12 table-responsive" style="height: 300px;">
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th>StaffName</th>
+            <th>StaffRoll</th>
+            <th>Gender</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let staffinfo of staffList | filter : staffterm;let staffdetail=index">
+            <td>{{staffinfo.staffname}}</td>
+            <td>{{staffinfo.staffrole}}</td>
+            <td>{{staffinfo.gender}}</td>
+            <td>
+              <button type="button" class="btn btn-warning btn-sm" style="border: 2px solid #454d55;" (click)="staffedit(staffinfo)"><i class="fa fa-edit"></i>Edit</button>
+              <button type="button" class="btn btn-danger btn-sm" style="border: 2px solid #454d55;" (click)="stafftrash(staffinfo.id)"><i class="fa fa-trash"></i>Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<br>
+<tag-input [(ngModel)]='items'></tag-input>

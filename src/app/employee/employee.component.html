@@ -1,0 +1,101 @@
+
+<hr style="background-color: black;">
+<h2 style="text-align: center; color: blue;">***  Employee Page  ***</h2>
+<hr style="background-color: black;">
+<br>
+<div class="row">
+  <div class="col-lg-4 col-md-4 col-12">
+  <form [formGroup]="employeeForm">
+    <div class="form-group">
+      <label>Employee Name:</label>
+      <input type="text" class="form-control" placeholder="Enter Employee Name" formControlName="Name"
+      [ngClass]="{'is-invalid': submitted && f['Name'].errors}" >
+      <div *ngIf="submitted && f['Name'].errors" class="invalid-feedback">
+        
+        <div *ngIf="f['Name'].errors['required']">
+          Full Name is required!
+        </div>
+  
+        <div *ngIf="f['Name'].errors['minlength']">
+          Please enter minimum 6 characters...!
+        </div>
+  
+        <div *ngIf="f['Name'].errors['maxlength']">
+          Please enter maximum 10 characters...!
+        </div>
+        
+  
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Employee ID:</label>
+      <input type="text" class="form-control" placeholder="Enter Employee ID"formControlName="Id"
+      [ngClass]="{'is-invalid': submitted && f['Id'].errors}">
+      <div *ngIf="submitted && f['Id'].errors" class="invalid-feedback">
+        <div *ngIf="f['Id'].errors['required']">
+          ID is required!
+        </div>
+  
+         <div *ngIf="f['Id'].errors['minlength']">
+          Please enter minimum 5 characters...!
+        </div>
+  
+        <div *ngIf="f['Id'].errors['maxlength']">
+          Please enter maximum 10 characters...!
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Mobile No:</label>
+      <input type="text" class="form-control" placeholder="Enter Employee Mobile No." formControlName="MobileNo" 
+      [ngClass]="{'is-invalid': submitted && f['MobileNo'].errors}">
+      <div *ngIf="submitted && f['MobileNo'].errors" class="invalid-feedback">
+        <div *ngIf="f['MobileNo'].errors['required']">
+        Mobile Number is required!
+        </div>
+  
+        <div *ngIf="f['MobileNo'].errors['maxlength']">
+          Please enter maximum 10 characters...!
+        </div>
+      </div>
+    </div>
+    <button type="submit" *ngIf="editoperation==false" class="btn btn-primary" style="border: 5px solid rgb(214, 232, 240);" (click)="save()">Submit</button>
+    <button type="button" *ngIf="editoperation==true" class="btn btn-warning" style="border: 5px solid rgb(214, 232, 240);"(click)="Updateemp()">Update</button>
+
+  </form>
+   
+  </div>
+  <div class="col-lg-8 col-md-8 col-12">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-12" style="padding-bottom: 1rem;">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" [(ngModel)]="termemp" >
+      
+    </div>
+    <div class="col-lg-12 col-md-12 col-12 table-responsive" style="height: 300px;">
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th>EmployeeName</th>
+            <th>EmployeeID</th>
+            <th>Employee No.</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let info of employeeList  | filter : termemp ;let emp=index">
+            <td>{{info.Name}}</td>
+            <td>{{info.Id}}</td>
+            <td>{{info.MobileNo}}</td>
+            <td>
+              <button type="button" class="btn btn-warning btn-sm" style="border: 2px solid #454d55;" (click)="edit(info)"><i class="fa fa-edit"></i>Edit</button>
+              <button type="button" class="btn btn-danger btn-sm" style="border: 2px solid #454d55;" (click)="trash(info.id)"><i class="fa fa-trash"></i>Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+ </div>
+</div>
+<br>
+<tag-input [(ngModel)]='items'></tag-input>

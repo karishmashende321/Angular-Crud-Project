@@ -1,0 +1,103 @@
+
+
+<hr style="background-color: black;">
+<h2 style="text-align: center; color: violet;">***  Customer Page  ***</h2>
+<hr style="background-color: black;">
+<br>
+<div class="row">
+  <div class="col-lg-4 col-md-5 col-12">
+  <form [formGroup]="customerForm">
+    <div class="form-group">
+      <label>Customer Name:</label>
+      <input type="text" class="form-control" placeholder="Enter Customer Name" formControlName="Name"
+      [ngClass]="{'is-invalid': submitted && f['Name'].errors}">
+     <div *ngIf="submitted && f['Name'].errors" class="invalid-feedback">
+
+      <div *ngIf="f['Name'].errors['required']">
+        Full Name is required!
+      </div>
+
+       <div *ngIf="f['Name'].errors['minlength']">
+        Please enter minimum 6 characters...!
+      </div>
+
+      <div *ngIf="f['Name'].errors['maxlength']">
+        Please enter maximum 10 characters...!
+      </div>
+      
+     </div>
+    
+    </div>
+    <div class="form-group">
+      <label>Email Address:</label>
+      <input type="email" class="form-control" placeholder="Enter Customer Email"formControlName="Email"
+      [ngClass]="{'is-invalid': submitted && f['Email'].errors}">
+      <div *ngIf="submitted && f['Email'].errors" class="invalid-feedback">
+
+        <div *ngIf="f['Email'].errors['required']">
+          Email is required!
+        </div>
+  
+         <div *ngIf="f['Email'].errors['minlength']">
+          Please enter minimum 6 characters...!
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Mobile No:</label>
+      <input type="text" class="form-control" placeholder="Enter CustomerMobile No."formControlName="Mobile"
+      [ngClass]="{'is-invalid': submitted && f['Mobile'].errors}">
+      <div *ngIf="submitted && f['Mobile'].errors" class="invalid-feedback">
+
+        <div *ngIf="f['Mobile'].errors['required']">
+          Mobile Number is required!
+        </div>
+        
+         <div *ngIf="f['Mobile'].errors['maxlength']">
+          Please enter maximum 10 characters...!
+        </div>
+      </div>
+    </div>
+    <button type="submit" *ngIf="editoperation==false" class="btn btn-primary"style="border: 5px solid rgb(214, 232, 240);" (click)="custsave()">Submit</button>
+    <button type="button" *ngIf="editoperation==true" class="btn btn-warning" style="border: 5px solid rgb(214, 232, 240);"(click)="Updatecust()">Update</button>
+
+   
+  </form>
+  
+  </div>
+  <div class="col-lg-8 col-md-8 col-12">
+   <div class="row">
+    <div class="col-lg-12 col-md-12 col-12" style="padding-bottom: 1rem;">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" [(ngModel)]="custext" >
+      
+    </div>
+<div class="col-lg-12 col-md-12 col-12 table-responsive" style="height: 300px;">
+  <table class="table table-dark table-striped">
+    <thead>
+      <tr>
+        <th>CostomerName</th>
+        <th>CustomerEmail</th>
+        <th>CustomerMobile</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let custinfo of customerList | filter : custext; let Cust=index">
+        <td>{{custinfo.Name}}</td>
+        <td>{{custinfo.Email}}</td>
+        <td>{{custinfo.Mobile}}</td>
+        <td>
+          <button type="button" class="btn btn-warning btn-sm" style="border: 2px solid #454d55;" (click)="custedit(custinfo)"><i class="fa fa-edit"></i>Edit</button>
+          <button type="button" class="btn btn-danger btn-sm" style="border: 2px solid #454d55;" (click)="custtrash(custinfo.id)"><i class="fa fa-trash"></i>Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+   </div>
+  
+ </div>
+</div>
+<tag-input [(ngModel)]='items'></tag-input>
+
+

@@ -1,0 +1,86 @@
+
+<hr style="background-color: black;">
+<br><h2 style="text-align: center; color: rebeccapurple;">***  Statements Page  ***</h2>
+<hr style="background-color: black;">
+<br style="background-color: black;">
+<div class="row">
+  <div class="col-lg-4 col-md-4 col-12">
+   <form [formGroup]="statementForm">
+    <div class="form-group">
+      <label>Idea:</label>
+      <input type="text" class="form-control" placeholder="Your Idea" formControlName="idea"
+      [ngClass]="{'is-invalid': submitted && f['idea'].errors}">
+      <div *ngIf="submitted && f['idea'].errors" class="invalid-feedback">
+
+        <div *ngIf="f['idea'].errors['required']">
+          idea is required!
+        </div>
+  
+         <div *ngIf="f['idea'].errors['minlength']">
+          Please enter minimum 10 characters...!
+        </div>
+       
+        <div *ngIf="f['idea'].errors['maxlength']">
+          Please enter maximum 20 characters...!
+        </div>
+       
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="comment">Description:</label>
+      <textarea class="form-control" rows="3" id="comment" placeholder="Description" formControlName="description"
+      [ngClass]="{'is-invalid': submitted && f['description'].errors}"></textarea>
+      <div *ngIf="submitted && f['description'].errors" class="invalid-feedback">
+       
+        <div *ngIf="f['description'].errors['required']">
+          Description is required!
+        </div>
+  
+         <div *ngIf="f['description'].errors['minlength']">
+          Please enter minimum 10 characters...!
+        </div>
+       
+        <div *ngIf="f['description'].errors['maxlength']">
+          Please enter maximum 50 characters...!
+        </div>
+      </div>
+    </div>
+    <button type="submit" *ngIf="editoperation==false" class="btn btn-primary"style="border: 5px solid rgb(214, 232, 240);" (click)="statementsubmit()">Submit</button>
+    <button type="button" *ngIf="editoperation==true" class="btn btn-warning" style="border: 5px solid rgb(214, 232, 240);"(click)="Update()">Update</button>
+
+  </form>
+   
+  </div>
+  <div class="col-lg-8 col-md-8 col-12">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-12" style="padding-bottom: 1rem;">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" [(ngModel)]="stateterm">
+        
+      </div>
+    <div class=" col-lg-12 col-md-12 col-12 table-responsive" style="height: 300px;">
+      <table class="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th>Idea</th>
+            <th>Description</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let state of statementList  | filter : stateterm;let statement=index">
+            <td>{{state.idea}}</td>
+            <td>{{state.description}}</td>
+            <td>
+              <button type="button" class="btn btn-warning btn-sm" style="border: 2px solid #454d55;" (click)="statementedit(state)"><i class="fa fa-edit"></i>Edit</button>
+              <button type="button" class="btn btn-danger btn-sm" style="border: 2px solid #454d55;" (click)="statementtrash(state.id)"><i class="fa fa-trash"></i>Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<br>
+<tag-input [(ngModel)]='items'></tag-input>
+
+
